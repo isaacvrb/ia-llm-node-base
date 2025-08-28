@@ -1,9 +1,11 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 
 export function createGoogleClient() {
 	if (!process.env.GOOGLE_API_KEY) {
 		throw new Error('GOOGLE_API_KEY não encontrada nas variáveis de ambiente');
 	}
 
-	return new GoogleGenerativeAI(process.env.GOOGLE_API_KEY);
+	return new GoogleGenAI({
+		apiKey: process.env.GOOGLE_API_KEY,
+	});
 }
