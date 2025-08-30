@@ -113,10 +113,25 @@ router.get('/google', async (req, res) => {
 // Route para Groq
 router.get('/groq', async (req, res) => {
 	const client = createGroqClient();
+
+	const response = await client.chat.completions.create({
+		model: 'llama-3.3-70b-versatile',
+		messages: [
+			{
+				role: 'system',
+				content: 'Seja direto e conciso. Responda em apenas uma frase',
+			},
+			{
+				role: 'user',
+				content: 'Qual o sentido da vida?',
+			},
+		],
+	});
+
+	const message = response.choices[0].message.content;
+
 	res.json({
-		provider: 'Groq',
-		message: 'Cliente Groq criado com sucesso',
-		client: !!client,
+		message,
 	});
 });
 
