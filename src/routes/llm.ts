@@ -123,10 +123,23 @@ router.get('/groq', async (req, res) => {
 // Route para Ollama
 router.get('/ollama', async (req, res) => {
 	const client = createOllamaClient();
+
+	const response = await client.chat({
+		model: 'llama3.1',
+		messages: [
+			{
+				role: 'system',
+				content: 'Seja direto e conciso. Responda em apenas uma frase',
+			},
+			{
+				role: 'user',
+				content: 'Qual o sentido da vida?',
+			},
+		],
+	});
+
 	res.json({
-		provider: 'Ollama',
-		message: 'Cliente Ollama criado com sucesso',
-		client: !!client,
+		message: response.message.content,
 	});
 });
 
