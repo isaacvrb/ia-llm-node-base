@@ -47,7 +47,7 @@ router.get('/openai', async (req, res) => {
 	});
 
 	res.json({
-		output: response.output_text,
+		message: response.output_text,
 	});
 });
 
