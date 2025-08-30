@@ -1,5 +1,6 @@
 import express from 'express';
 import { xai } from '@ai-sdk/xai';
+import { bookFinder } from '../services/openai.service.js';
 import { generateText } from 'ai';
 import {
 	createXAIClient,
@@ -45,6 +46,21 @@ router.get('/openai', async (req, res) => {
 
 	res.json({
 		output: response.output_text,
+	});
+});
+router.get('/openai/book-finder', async (req, res) => {
+	const book = await bookFinder('O livro fala que o sentido da vida é 42');
+
+	if (!book) {
+		return res.status(404).json({
+			book: null,
+			error: 'Livro não encontrado',
+		});
+	}
+
+	res.json({
+		book,
+		error: null,
 	});
 });
 
